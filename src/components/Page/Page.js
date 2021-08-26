@@ -14,24 +14,20 @@ const Page = () => {
   const { isError, isLoading, forecast, sumbitRequest } = useForecast();
 
   const onSubmit = (value) => {
-      sumbitRequest(value)
-  }
+    sumbitRequest(value);
+  };
 
   return (
     <Fragment>
       <Header />
-        <Form submitSearch={onSubmit} />
-
+      <Form submitSearch={onSubmit} isError={isError} />
       {forecast && (
-        <div className={styles.box, "mt-5"}>
-          {isError && <Error message={isError} />}
-
+        <div className={(styles.box, "mt-5")}>
           {isLoading && <Loader />}
 
           {!isLoading && forecast && <Forecast forecast={forecast} />}
         </div>
       )}
-
     </Fragment>
   );
 };

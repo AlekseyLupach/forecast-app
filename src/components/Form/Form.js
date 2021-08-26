@@ -1,18 +1,19 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-
+import Error from "../Error/Error";
 import styles from "./Form.module.css";
 
-const Form = ({submitSearch}) => {
+const Form = ({ submitSearch, isError }) => {
   const [location, setLocation] = useState("");
   const onSubmit = (e) => {
     e.preventDefault();
     if (!location || location === "") return;
-    submitSearch(location)
+    submitSearch(location);
   };
 
   return (
     <form onSubmit={onSubmit} className={styles.form}>
+      {isError && <Error message={isError} />}
       <input
         aria-label="location"
         type="text"
@@ -31,7 +32,7 @@ const Form = ({submitSearch}) => {
 };
 
 Form.propTypes = {
-    submitSearch: PropTypes.func.isRequired,
-}
+  submitSearch: PropTypes.func.isRequired,
+};
 
 export default Form;

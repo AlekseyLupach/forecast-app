@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import styles from './Error.module.css';
 
 const Error = ({ message }) => (
-    <div className={`${styles.error} alert position-absolute`} role="alert">
+    <div className={`${styles.error} error alert`} role="alert">
         {message}
     </div>
 );
