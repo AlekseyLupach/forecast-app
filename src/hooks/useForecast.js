@@ -4,7 +4,7 @@ import getCurrentDayForecast from "../utils/getCurrentDayForecast";
 import getUpcomingDaysForecast from "../utils/getUpcomingDaysForecast";
 import getCurrentDayDetailedForecast from "../utils/getCurrentDayDetailedForecast";
 
-const API_BASE_URL = "http://api.openweathermap.org/data/2.5";
+export const API_BASE_URL = "http://api.openweathermap.org/data/2.5";
 const useForecast = () => {
   const [isError, setError] = useState(false);
   const [isLoading, setLoading] = useState(false);

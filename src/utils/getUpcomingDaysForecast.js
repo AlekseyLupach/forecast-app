@@ -4,6 +4,7 @@ const forecastOptions = {
 
 const getUpcomingDaysForecast = (daysData) =>
   daysData.slice(1).map((day) => ({
+    id: day.dt,
     imgUrl: day.weather[0].icon,
     temperature: Math.round(day.temp.eve),
     weekday: new Date(day.dt * 1000)
