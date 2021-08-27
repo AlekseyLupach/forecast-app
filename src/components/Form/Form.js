@@ -52,11 +52,11 @@ const Form = ({ submitSearch, isError }) => {
         aria-label="location"
         type="text"
         className={`${styles.input} form-control`}
+        required
         placeholder="Введите город"
         value={location}
         onChange={(e) => onChangeHandler(e.target.value)}
         onBlur={onBlur}
-        required
       />
       <ul className={styles.suggestionLists}>
         {suggestions &&

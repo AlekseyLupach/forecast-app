@@ -21,7 +21,7 @@ const Page = () => {
     <Fragment>
       <Header />
       <Form submitSearch={onSubmit} isError={isError} />
-      {forecast && (
+      {isError ? "" : forecast && (
         <div className={(styles.box, "mt-5")}>
           {isLoading && <Loader />}
 
