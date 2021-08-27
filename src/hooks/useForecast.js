@@ -1,66 +1,61 @@
-import { useState } from "react";
 import axios from "axios";
+import { useState } from "react";
+import getCurrentDayForecast from "../utils/getCurrentDayForecast";
+import getUpcomingDaysForecast from "../utils/getUpcomingDaysForecast";
+import getCurrentDayDetailedForecast from "../utils/getCurrentDayDetailedForecast";
 
-import getCurrentDayDetailedForecast from '../utils/getCurrentDayDetailedForecast'
-import getCurrentDayForecast from '../utils/getCurrentDayForecast'
-import getUpcomingDaysForecast from '../utils/getUpcomingDaysForecast'
-
-const BASE_URL = "https://www.metaweather.com/api/location";
-const CROSS_DOMAIN = "https://the-ultimate-api-challenge.herokuapp.com";
-const REQUEST_URL = `${CROSS_DOMAIN}/${BASE_URL}`;
-
+const API_BASE_URL = "http://api.openweathermap.org/data/2.5";
 const useForecast = () => {
   const [isError, setError] = useState(false);
   const [isLoading, setLoading] = useState(false);
   const [forecast, setForecast] = useState(null);
 
-  const getWoeid = async (location) => {
-    const { data } = await axios(`${REQUEST_URL}/search`, {params: { query: location }});
+  const getForecastData = async (location) => {
+    try {
+      const { data } = await axios(
+        `${API_BASE_URL}/weather?q=${location}&units=metric&appid=${process.env.REACT_APP_API_KEY}`,
+        { params: { query: location } }
+      );
+      return data;
+    } catch (e) {
+      if (e.name === "Error") {
+        setError("Такой локации не найдено");
+        setLoading(false);
+        return;
+      }
+    }
+  };
 
+  const getForecastDataDays = async (location) => {
+    const { data } = await axios(
+      `${API_BASE_URL}/forecast/daily?q=${location}&cnt=6&units=metric&appid=${process.env.REACT_APP_API_KEY}`,
+      { params: { query: location } }
+    );
     if (!data || data.length === 0) {
       setError("Такой локации не найдено");
-      setLoading(false)
+      setLoading(false);
       return;
     }
 
-    return data[0]
+    return data;
   };
 
+  const gatherForecastData = (data, daysData) => {
+    const currentDay = getCurrentDayForecast(data);
+    const currentDayDetails = getCurrentDayDetailedForecast(data);
+    const upcomingDays = getUpcomingDaysForecast(daysData.list);
 
-  const getForecastData = async (woeid) => {
-    const {data} = await axios(`${REQUEST_URL}/${woeid}`);
-    if (!data || data.length === 0) {
-        setError("Что-то пошло не так");
-        setLoading(false)
-        return
-    }
-
-    return data
-  }
-
-  const gatherForecastData= (data) => {
-    const currentDay = getCurrentDayForecast(data.consolidated_weather[0], data.title, data.parent)
-    console.log(currentDay)
-    const currentDayDetails = getCurrentDayDetailedForecast(data.consolidated_weather[0]) 
-    const upcomingDays = getUpcomingDaysForecast(data.consolidated_weather)
-
-    setForecast({currentDay, currentDayDetails, upcomingDays})
+    setForecast({ currentDay, currentDayDetails, upcomingDays });
     setLoading(false);
-  }
+  };
 
   const sumbitRequest = async (location) => {
     setLoading(true);
     setError(false);
 
-    const response = await getWoeid(location);
-    if (!response?.woeid) return; 
-
-    const data = await getForecastData(response.woeid)
-    if (!data) return;
-
-    gatherForecastData(data)
-    console.log(response)
-    console.log(data)
+    const data = await getForecastData(location);
+    const daysData = await getForecastDataDays(location);
+    gatherForecastData(data, daysData);
   };
 
   return {

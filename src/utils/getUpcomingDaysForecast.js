@@ -1,12 +1,14 @@
-import moment from 'moment';
+const forecastOptions = {
+  weekday: "long",
+};
 
-const getWeekday = date => moment(date).format('dddd').substring(0, 3);
-
-const getUpcomingDaysForecast = data =>
-    data.slice(1).map(day => ({
-        imgUrl: day.weather_state_abbr,
-        temperature: Math.round(day.max_temp),
-        weekday: getWeekday(day.applicable_date),
-    }));
+const getUpcomingDaysForecast = (daysData) =>
+  daysData.slice(1).map((day) => ({
+    imgUrl: day.weather[0].icon,
+    temperature: Math.round(day.temp.eve),
+    weekday: new Date(day.dt * 1000)
+      .toLocaleString("en-US", forecastOptions)
+      .substr(0, 3),
+  }));
 
 export default getUpcomingDaysForecast;

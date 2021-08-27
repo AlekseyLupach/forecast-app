@@ -6,14 +6,15 @@
     align-items    : center;
     justify-content: center;
     margin         : 0 auto;
-    z-index        : 2;
-    position       : relative
+    z-index        : 3;
+    position       : relative;
+
 }
 
 .input {
     border-radius: var(--main-border-radius);
     margin-top   : 1rem;
-
+    margin-bottom: 1rem;
 }
 
 .button {
@@ -39,21 +40,24 @@
 
 
 .suggestionLists {
-    z-index        : -1;
-    position       : relative;
-    margin         : 0;
-    padding        : 0;
-    list-style-type: none;
-    width          : 100%;
-    border         : 1px solid rgba(0, 0, 0, 0.2);
-    border-radius  : 8px;
-    box-shadow     : 0 5px 10px rgba(0, 0, 0, 0.2);
+    z-index         : 2;
+    position        : absolute;
+    left            : 0;
+    top             : 54px;
+    margin          : 0;
+    padding         : 0;
+    list-style-type : none;
+    width           : 60%;
+    border-radius   : 8px;
+    box-shadow      : 0 5px 10px rgba(0, 0, 0, 0.2);
+    background-color: #fff;
 }
 
 .suggestionItems {
     padding: 6px;
+    color  : black;
 }
 
 .suggestionItems:hover {
-    background-color:rgba(0, 0, 0, 0.2)
+    background-color: rgba(0, 0, 0, 0.2)
 }

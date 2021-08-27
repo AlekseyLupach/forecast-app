@@ -1,1 +1,1 @@
-export { default } from './UpcomingDaysForecast';
+export { default } from "./UpcomingDaysForecast";

@@ -1,1 +1,1 @@
-export { default } from './CurrentDayDescription';
+export { default } from "./CurrentDayDescription";

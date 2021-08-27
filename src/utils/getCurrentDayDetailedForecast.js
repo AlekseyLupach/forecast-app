@@ -1,34 +1,39 @@
-const currentDayForecast = data => [
-    {
-        name: 'predictability',
-        value: data.predictability,
-        unit: '%',
-    },
-    {
-        name: 'humidity',
-        value: data.humidity,
-        unit: '%',
-    },
-    {
-        name: 'wind',
-        value: Math.round(data.wind_speed),
-        unit: 'km/h',
-    },
-    {
-        name: 'air pressure',
-        value: data.air_pressure,
-        unit: 'mb',
-    },
-    {
-        name: 'max temp',
-        value: Math.round(data.max_temp),
-        unit: '°C',
-    },
-    {
-        name: 'min temp',
-        value: Math.round(data.min_temp),
-        unit: '°C',
-    },
+const currentDayForecast = (data) => [
+  {
+    name: "humidity",
+    value: data.main.humidity,
+    unit: "%",
+  },
+  {
+    name: "wind",
+    value: Math.round(data.wind.speed),
+    unit: "km/h",
+  },
+  {
+    name: "pressure",
+    value: data.main.pressure,
+    unit: "mb",
+  },
+  {
+    name: "max temp",
+    value: Math.round(data.main.temp_max),
+    unit: "°C",
+  },
+  {
+    name: "min temp",
+    value: Math.round(data.main.temp_min),
+    unit: "°C",
+  },
+  {
+    name: "sunrise",
+    value: new Date(data.sys.sunrise * 1000).toLocaleTimeString(),
+    unit: "°C",
+  },
+  {
+    name: "sunset",
+    value: new Date(data.sys.sunset * 1000).toLocaleTimeString(),
+    unit: "°C",
+  },
 ];
 
 export default currentDayForecast;

@@ -1,13 +1,17 @@
-import moment from 'moment';
+import {
+  getCurrentDayName,
+  getCurrentMonthNames,
+  getCurentDayNumber,
+} from "./getDate";
 
-const getCurrentDayForecast = (data, title, parent) => ({
-    weekday: moment(data.applicable_date).format('dddd'),
-    date: moment(data.applicable_date).format('MMMM Do'),
-    location: title,
-    temperature: Math.round(data.the_temp),
-    weatherIcon: `https://www.metaweather.com/static/img/weather/${data.weather_state_abbr}.svg`,
-    weatherDescription: data.weather_state_name,
-    country: parent.title
+const getCurrentDayForecast = (data) => ({
+  weekday: getCurrentDayName(),
+  date: getCurrentMonthNames() + " " + getCurentDayNumber() + "th",
+  location: data.name,
+  temperature: Math.round(data.main.temp),
+  weatherIcon: ` https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`,
+  weatherDescription: data.weather[0].description,
+  country: data.sys.country,
 });
 
 export default getCurrentDayForecast;
