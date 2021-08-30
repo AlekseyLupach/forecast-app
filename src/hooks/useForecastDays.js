@@ -13,10 +13,10 @@ const useForecast = () => {
   const getForecastData = async (location) => {
     try {
       const { data } = await axios(
-        `${API_BASE_URL}/weather?q=${location}&appid=${process.env.REACT_APP_API_KEY}`,
+        `${API_BASE_URL}/weather?dt=${location}&units=metric&appid=${process.env.REACT_APP_API_KEY}`,
         { params: { query: location } }
       );
-      console.log(data)
+
       return data;
     } catch (e) {
       if (e.name === "Error") {
@@ -29,7 +29,7 @@ const useForecast = () => {
 
   const getForecastDataDays = async (location) => {
     const { data } = await axios(
-      `${API_BASE_URL}/forecast/daily?q=${location}&cnt=6&units=metric&appid=${process.env.REACT_APP_API_KEY}`,
+      `${API_BASE_URL}/forecast/daily?dt=${location}&cnt=6&units=metric&appid=${process.env.REACT_APP_API_KEY}`,
       { params: { query: location } }
     );
     if (!data || data.length === 0) {

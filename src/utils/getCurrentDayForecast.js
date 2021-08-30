@@ -1,12 +1,16 @@
-import {
-  getCurrentDayName,
-  getCurrentMonthNames,
-  getCurentDayNumber,
-} from "./getDate";
+const forecastNameDayOptions = {
+  weekday: "long",
+}
 
+const forecastNameMothOptions = {
+  month: "long",
+  day: "numeric",
+}
 const getCurrentDayForecast = (data) => ({
-  weekday: getCurrentDayName(),
-  date: getCurrentMonthNames() + " " + getCurentDayNumber() + "th",
+  weekday: new Date(data.dt * 1000)
+  .toLocaleString("en-US", forecastNameDayOptions),
+  date: new Date(data.dt * 1000)
+  .toLocaleString("en-US", forecastNameMothOptions) + "th",
   location: data.name,
   temperature: Math.round(data.main.temp),
   weatherIcon: ` https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`,
